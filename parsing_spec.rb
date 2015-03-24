@@ -14,7 +14,7 @@ describe StringScanner do
 end
 
 describe Parser do
-  let(:parser) { Parser.new "<body>testing</body><title>parsing with ruby</title>" }
+  let(:parser) { Parser.new "<body>testing</body> <title>parsing with ruby</title>" }
 
   it "can parse an HTML tag" do
     expect(parser.first_tag.name).to eq "body"

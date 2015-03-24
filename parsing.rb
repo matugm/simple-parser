@@ -10,6 +10,7 @@ class Parser
 
   def parse
     while !@buffer.eos?
+      skip_spaces
       parse_element
     end
   end
@@ -19,6 +20,10 @@ class Parser
       @tags << find_tag
       last_tag.content = find_content
     end
+  end
+
+  def skip_spaces
+    @buffer.skip /\s+/
   end
 
   def find_tag
