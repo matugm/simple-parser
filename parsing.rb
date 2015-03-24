@@ -1,5 +1,7 @@
 
 class Parser
+  attr_reader :tags
+
   def initialize(str)
     @buffer = StringScanner.new(str)
     @tags   = []
@@ -7,22 +9,36 @@ class Parser
   end
 
   def parse
+    while !@buffer.eos?
+      parse_element
+    end
+  end
+
+  def parse_element
     if @buffer.peek(1) == "<"
       @tags << find_tag
-      first_tag.content = find_content
+      last_tag.content = find_content
     end
   end
 
   def find_tag
-    Tag.new(@buffer.scan_until />/)
+    @buffer.getch
+    tag = @buffer.scan_until />/
+    Tag.new(tag.chop)
   end
 
   def find_content
-    @buffer.scan_until /<\//
+    tag = last_tag.name
+    content = @buffer.scan_until /<\/#{tag}>/
+    content.sub("</#{tag}>", "")
   end
 
   def first_tag
     @tags.first
+  end
+
+  def last_tag
+    @tags.last
   end
 end
 
