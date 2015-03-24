@@ -53,6 +53,5 @@ class Tag
 
   def initialize(name)
     @name = name
-    @content
   end
 end
