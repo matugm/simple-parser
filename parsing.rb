@@ -35,7 +35,7 @@ class Parser
   def find_content
     tag = last_tag.name
     content = @buffer.scan_until /<\/#{tag}>/
-    content.sub('</#{tag}>', '')
+    content.sub("</#{tag}>", "")
   end
 
   def first_tag
