@@ -9,14 +9,14 @@ class Parser
   end
 
   def parse
-    while !@buffer.eos?
+    until @buffer.eos?
       skip_spaces
       parse_element
     end
   end
 
   def parse_element
-    if @buffer.peek(1) == "<"
+    if @buffer.peek(1) == '<'
       @tags << find_tag
       last_tag.content = find_content
     end
@@ -35,7 +35,7 @@ class Parser
   def find_content
     tag = last_tag.name
     content = @buffer.scan_until /<\/#{tag}>/
-    content.sub("</#{tag}>", "")
+    content.sub('</#{tag}>', '')
   end
 
   def first_tag
