@@ -23,13 +23,14 @@ class Parser
   end
 
   def skip_spaces
-    @buffer.skip /\s+/
+    @buffer.skip(/\s+/)
   end
 
   def find_tag
     @buffer.getch
-    tag = @buffer.scan_until />/
-    Tag.new(tag.chop)
+    tag = @buffer.scan(/\w+/)
+    @buffer.getch
+    Tag.new(tag)
   end
 
   def find_content
